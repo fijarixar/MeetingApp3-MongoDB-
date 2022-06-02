@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.customs.MeetingApp3.model.TodoDTO;
@@ -59,6 +60,21 @@ public class TodoController {
             return new ResponseEntity<>("Todo not found with id "+id, HttpStatus.NOT_FOUND);
         }
     }
+
+
+
+
+     // read data by ID metode PathVariable  contoh : localhost/todos/15224
+     @GetMapping("/todos2/")
+     public ResponseEntity<?> getSingleTodo2(@RequestParam("id") String id) {
+         Optional<TodoDTO> todoOptional = todoRepo.findById(id);
+         if(todoOptional.isPresent()) {
+             return new ResponseEntity<>(todoOptional.get(), HttpStatus.OK);
+         }else {
+             return new ResponseEntity<>("Todo not found with id "+id, HttpStatus.NOT_FOUND);
+         }
+     }
+ 
 
 
     @PutMapping("/todos/{id}")
